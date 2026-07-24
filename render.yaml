@@ -37,10 +37,7 @@ services:
           name: magda-servicio-auth
           envVarKey: JWT_SECRET
       - key: AUTH_SERVICE_URL
-        fromService:
-          type: web
-          name: magda-servicio-auth
-          property: host
+        value: http://magda-servicio-auth:10000
       - key: DATABASE_URL
         fromDatabase:
           name: magda-db
