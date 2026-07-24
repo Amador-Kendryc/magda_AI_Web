@@ -10,7 +10,11 @@ const pool    = require('./db');
 
 const app  = express();
 const PORT = process.env.PORT || 3002;
-const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:3001';
+let AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:3001';
+if (!AUTH_SERVICE_URL.startsWith('http://') && !AUTH_SERVICE_URL.startsWith('https://')) {
+  AUTH_SERVICE_URL = `http://${AUTH_SERVICE_URL}`;
+}
+
 
 app.use(cors());
 app.use(express.json());
