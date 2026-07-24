@@ -1,5 +1,5 @@
 /* =====================================================================
-   ServicioMagda — index.js v2.2 (Cloud Gateway & Multi-fallback)
+   ServicioMagda — index.js v2.3 (Cloud Cold-Start Resilient Gateway)
    Puerto: 3002 (o process.env.PORT) — Portal MAGDA informativo + Gateway SOA
    ===================================================================== */
 require('dotenv').config();
@@ -13,20 +13,12 @@ const PORT = process.env.PORT || 3002;
 
 /* Helper para formatear URL del microservicio de autenticación */
 function formatAuthUrl(rawUrl) {
-  if (!rawUrl) return 'http://localhost:3001';
+  if (!rawUrl) return 'https://magda-servicio-auth.onrender.com';
   let url = rawUrl.trim();
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
-    url = `http://${url}`;
+    url = `https://${url}`;
   }
-  try {
-    const parsed = new URL(url);
-    if (!parsed.port && !parsed.hostname.includes('.')) {
-      parsed.port = '10000';
-    }
-    return parsed.toString().replace(/\/$/, '');
-  } catch {
-    return url.replace(/\/$/, '');
-  }
+  return url.replace(/\/$/, '');
 }
 
 const PRIMARY_AUTH_URL = formatAuthUrl(process.env.AUTH_SERVICE_URL);
@@ -38,12 +30,12 @@ app.use(express.json());
 app.use('/api/auth', async (req, res) => {
   const candidateUrls = [
     PRIMARY_AUTH_URL,
+    'https://magda-servicio-auth.onrender.com',
     'http://magda-servicio-auth:10000',
     'http://localhost:3001'
   ];
   
-  // Eliminar duplicados
-  const targets = [...new Set(candidateUrls)];
+  const targets = [...new Set(candidateUrls.filter(Boolean))];
   
   let lastError = null;
   let responseData = null;
@@ -63,28 +55,38 @@ app.use('/api/auth', async (req, res) => {
   }
 
   for (const baseUrl of targets) {
-    try {
-      const targetUrl = `${baseUrl}/api/auth${req.url}`;
-      console.log(`[ServicioMagda][Proxy] Intentando ${req.method} -> ${targetUrl}`);
-      const r = await fetch(targetUrl, options);
-      const contentType = r.headers.get('content-type');
-      responseData = contentType && contentType.includes('application/json')
-        ? await r.json()
-        : await r.text();
-      responseStatus = r.status;
-      success = true;
-      break;
-    } catch (err) {
-      lastError = err;
-      console.warn(`[ServicioMagda][Proxy] Fallo intento hacia ${baseUrl}: ${err.message}`);
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const targetUrl = `${baseUrl}/api/auth${req.url}`;
+        console.log(`[ServicioMagda][Proxy] Intentando (${attempt}) ${req.method} -> ${targetUrl}`);
+        
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 25000);
+        
+        const r = await fetch(targetUrl, { ...options, signal: controller.signal });
+        clearTimeout(timer);
+        
+        const contentType = r.headers.get('content-type');
+        responseData = contentType && contentType.includes('application/json')
+          ? await r.json()
+          : await r.text();
+        responseStatus = r.status;
+        success = true;
+        break;
+      } catch (err) {
+        lastError = err;
+        console.warn(`[ServicioMagda][Proxy] Intento ${attempt} hacia ${baseUrl} fallo: ${err.message}`);
+        if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 2000));
+      }
     }
+    if (success) break;
   }
 
   if (success) {
     res.status(responseStatus).json(typeof responseData === 'string' ? { message: responseData } : responseData);
   } else {
     console.error('[ServicioMagda][AuthProxyError]', lastError?.message);
-    res.status(502).json({ error: 'Error al conectar con ServicioAuth: ' + (lastError?.message || 'No responde') });
+    res.status(502).json({ error: 'El servicio de autenticacion esta despertando en la nube. Por favor reintenta en unos segundos.' });
   }
 });
 
@@ -102,7 +104,7 @@ app.get('/api/health', async (req, res) => {
   try {
     const r = await pool.query('SELECT NOW() AS hora, version() AS ver');
     res.json({
-      servicio:   'ServicioMagda v2.2',
+      servicio:   'ServicioMagda v2.3',
       estado:     'ok',
       puerto:     PORT,
       auth_target: PRIMARY_AUTH_URL,
