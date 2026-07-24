@@ -7,8 +7,10 @@
    ========================================================= */
 'use strict';
 
-const AUTH_API  = 'http://localhost:3001';
-const MAGDA_API = 'http://localhost:3002';
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const AUTH_API  = isLocal ? 'http://localhost:3001' : window.location.origin;
+const MAGDA_API = isLocal ? 'http://localhost:3002' : window.location.origin;
+
 
 /* ── Helpers ── */
 const $  = id => document.getElementById(id);

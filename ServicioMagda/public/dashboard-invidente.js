@@ -3,7 +3,9 @@
    ========================================================= */
 'use strict';
 
-const MAGDA_API = 'http://localhost:3002';
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const MAGDA_API = isLocal ? 'http://localhost:3002' : window.location.origin;
+
 const $ = id => document.getElementById(id);
 
 function getUser()  { return JSON.parse(localStorage.getItem('magda_user') || 'null'); }
