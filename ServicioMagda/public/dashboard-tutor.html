@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel del Tutor — MAGDA AI</title>
+  <meta name="description" content="Panel de gestión para tutores de MAGDA AI. Supervisa a las personas invidentes a tu cargo y registra evaluaciones de viaje." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+</head>
+<body>
+
+<div id="toasts" aria-live="assertive" aria-atomic="true"></div>
+<div id="sr-live" aria-live="polite" class="sr-only"></div>
+
+<!-- HEADER -->
+<header class="dash-header" role="banner">
+  <div class="dash-header-inner">
+    <a href="index.html" class="nav-brand" aria-label="Regresar a MAGDA AI inicio">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-name">MAGDA <span class="brand-sub">AI</span></span>
+    </a>
+    <div class="dash-role-badge" role="note" aria-label="Rol de usuario: Tutor">
+      <i data-lucide="user-check" aria-hidden="true"></i>
+      Panel del Tutor
+    </div>
+    <div class="dash-user" id="dash-user-info"></div>
+    <button class="btn-ghost btn-sm" id="btn-logout" aria-label="Cerrar sesión">
+      <i data-lucide="log-out" aria-hidden="true"></i>
+      Salir
+    </button>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <nav class="dash-sidebar" aria-label="Navegación del panel">
+    <ul role="list">
+      <li>
+        <button class="dash-nav-btn active" data-section="invidentes" aria-current="page">
+          <i data-lucide="users" aria-hidden="true"></i>
+          Mis invidentes
+        </button>
+      </li>
+      <li>
+        <button class="dash-nav-btn" data-section="evaluaciones">
+          <i data-lucide="clipboard-list" aria-hidden="true"></i>
+          Evaluaciones
+        </button>
+      </li>
+      <li>
+        <button class="dash-nav-btn" data-section="vincular">
+          <i data-lucide="user-plus" aria-hidden="true"></i>
+          Vincular invidente
+        </button>
+      </li>
+      <li>
+        <button class="dash-nav-btn" data-section="registrar">
+          <i data-lucide="user-cog" aria-hidden="true"></i>
+          Registrar invidente
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content" class="dash-main">
+
+    <!-- ── Sección: Mis invidentes ── -->
+    <section id="sec-invidentes" class="dash-section" aria-labelledby="title-invidentes">
+      <div class="dash-section-header">
+        <h1 id="title-invidentes" class="dash-title">
+          <i data-lucide="users" aria-hidden="true"></i>
+          Personas bajo mi supervisión
+        </h1>
+        <button class="btn-primary btn-sm" id="btn-nueva-eval" aria-label="Nueva evaluación de viaje">
+          <i data-lucide="plus" aria-hidden="true"></i>
+          Nueva evaluación
+        </button>
+      </div>
+
+      <div id="invidentes-list" class="card-grid" aria-live="polite">
+        <div class="loading-state" role="status">
+          <i data-lucide="loader-2" class="spin" aria-hidden="true"></i>
+          Cargando...
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Sección: Evaluaciones ── -->
+    <section id="sec-evaluaciones" class="dash-section" aria-labelledby="title-evaluaciones" hidden>
+      <div class="dash-section-header">
+        <h1 id="title-evaluaciones" class="dash-title">
+          <i data-lucide="clipboard-list" aria-hidden="true"></i>
+          Historial de evaluaciones
+        </h1>
+      </div>
+
+      <div id="evaluaciones-list" class="eval-list" aria-live="polite">
+        <div class="loading-state" role="status">
+          <i data-lucide="loader-2" class="spin" aria-hidden="true"></i>
+          Cargando...
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Sección: Vincular ── -->
+    <section id="sec-vincular" class="dash-section" aria-labelledby="title-vincular" hidden>
+      <div class="dash-section-header">
+        <h1 id="title-vincular" class="dash-title">
+          <i data-lucide="user-plus" aria-hidden="true"></i>
+          Vincular usuario invidente existente
+        </h1>
+      </div>
+
+      <div class="form-card">
+        <p class="form-help">
+          Si la persona invidente ya tiene una cuenta en MAGDA, puedes vincularla a tu panel ingresando su correo electrónico.
+        </p>
+        <form id="vincular-form" novalidate>
+          <div class="form-group">
+            <label for="vin-correo" class="form-label">
+              <i data-lucide="mail" aria-hidden="true"></i>
+              Correo del usuario invidente
+            </label>
+            <input type="email" id="vin-correo" name="correo_invidente" class="form-input"
+                   placeholder="correo@ejemplo.com" autocomplete="email" required
+                   aria-describedby="vin-correo-hint" />
+            <span id="vin-correo-hint" class="form-hint">El usuario debe tener el rol "Invidente" en su cuenta.</span>
+          </div>
+          <div id="vin-err" class="form-error" role="alert" aria-live="polite"></div>
+          <div id="vin-ok"  class="form-success" role="status" aria-live="polite"></div>
+          <button type="submit" class="btn-primary">
+            <i data-lucide="link" aria-hidden="true"></i>
+            Vincular
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ── Sección: Registrar invidente nuevo ── -->
+    <section id="sec-registrar" class="dash-section" aria-labelledby="title-registrar" hidden>
+      <div class="dash-section-header">
+        <h1 id="title-registrar" class="dash-title">
+          <i data-lucide="user-cog" aria-hidden="true"></i>
+          Registrar nuevo usuario invidente
+        </h1>
+      </div>
+
+      <div class="form-card">
+        <p class="form-help">
+          Crea una cuenta nueva para una persona invidente. Queda automáticamente vinculada a tu panel de supervisión.
+        </p>
+        <form id="reg-inv-form" novalidate>
+          <div class="form-group">
+            <label for="ri-nombre" class="form-label">
+              <i data-lucide="user" aria-hidden="true"></i>
+              Nombre completo
+            </label>
+            <input type="text" id="ri-nombre" name="nombre_completo" class="form-input"
+                   placeholder="Nombre del usuario invidente" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="ri-correo" class="form-label">
+              <i data-lucide="mail" aria-hidden="true"></i>
+              Correo electrónico
+            </label>
+            <input type="email" id="ri-correo" name="correo" class="form-input"
+                   placeholder="correo@ejemplo.com" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="ri-pass" class="form-label">
+              <i data-lucide="lock" aria-hidden="true"></i>
+              Contraseña temporal (mínimo 6 caracteres)
+            </label>
+            <input type="password" id="ri-pass" name="contrasena" class="form-input"
+                   placeholder="••••••••" required minlength="6" />
+          </div>
+          <div id="ri-err" class="form-error" role="alert" aria-live="polite"></div>
+          <div id="ri-ok"  class="form-success" role="status" aria-live="polite"></div>
+          <button type="submit" class="btn-primary">
+            <i data-lucide="user-plus" aria-hidden="true"></i>
+            Registrar y vincular
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODAL: Seleccionar invidente para evaluación -->
+<div id="modal-eval-select" class="modal" role="dialog" aria-modal="true"
+     aria-labelledby="modal-eval-title" aria-hidden="true">
+  <div class="modal-box">
+    <button class="modal-close" id="close-eval-select" aria-label="Cerrar">
+      <i data-lucide="x" aria-hidden="true"></i>
+    </button>
+    <div class="modal-header">
+      <span class="brand-dot sm" aria-hidden="true"></span>
+      <h2 id="modal-eval-title">Seleccionar persona para evaluar</h2>
+    </div>
+    <p style="font-size:.9rem;color:var(--gray-300);margin-bottom:1.5rem;">
+      Selecciona la persona invidente cuyo viaje deseas evaluar:
+    </p>
+    <div id="modal-inv-list" role="list" aria-label="Lista de invidentes disponibles"></div>
+  </div>
+</div>
+
+<script src="dashboard-tutor.js"></script>
+</body>
+</html>

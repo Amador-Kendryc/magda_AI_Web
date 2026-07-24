@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Panel — Usuario Invidente — MAGDA AI</title>
+  <meta name="description" content="Panel de usuario invidente MAGDA AI. Consulta tu historial de viajes y tutores asignados. Optimizado para lectores de pantalla." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+</head>
+<body>
+
+<div id="toasts" aria-live="assertive" aria-atomic="true"></div>
+<div id="sr-live" aria-live="polite" class="sr-only"></div>
+
+<!-- HEADER -->
+<header class="dash-header" role="banner">
+  <div class="dash-header-inner">
+    <a href="index.html" class="nav-brand" aria-label="Regresar al inicio de MAGDA AI">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-name">MAGDA <span class="brand-sub">AI</span></span>
+    </a>
+    <div class="dash-role-badge dash-role-badge--inv" role="note" aria-label="Rol de usuario: Usuario Invidente">
+      <i data-lucide="accessibility" aria-hidden="true"></i>
+      Mi Panel
+    </div>
+    <div class="dash-user" id="dash-user-info"></div>
+    <button class="btn-ghost btn-sm" id="btn-logout" aria-label="Cerrar sesion">
+      <i data-lucide="log-out" aria-hidden="true"></i>
+      Salir
+    </button>
+  </div>
+</header>
+
+<div class="dash-layout">
+
+  <!-- SIDEBAR — enfocado en lectores de pantalla primero -->
+  <nav class="dash-sidebar" aria-label="Navegacion del panel de usuario">
+    <ul role="list">
+      <li>
+        <button class="dash-nav-btn active" data-section="perfil" aria-current="page">
+          <i data-lucide="user" aria-hidden="true"></i>
+          Mi perfil
+        </button>
+      </li>
+      <li>
+        <button class="dash-nav-btn" data-section="tutores">
+          <i data-lucide="user-check" aria-hidden="true"></i>
+          Mis tutores
+        </button>
+      </li>
+      <li>
+        <button class="dash-nav-btn" data-section="historial">
+          <i data-lucide="history" aria-hidden="true"></i>
+          Historial de accesos
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <main id="main-content" class="dash-main">
+
+    <!-- ── Perfil ── -->
+    <section id="sec-perfil" class="dash-section" aria-labelledby="title-perfil">
+      <div class="dash-section-header">
+        <h1 id="title-perfil" class="dash-title">
+          <i data-lucide="user" aria-hidden="true"></i>
+          Mi perfil
+        </h1>
+      </div>
+      <div id="perfil-content" class="profile-card" aria-live="polite">
+        <div class="loading-state" role="status">
+          <i data-lucide="loader-2" class="spin" aria-hidden="true"></i>
+          Cargando perfil...
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Tutores ── -->
+    <section id="sec-tutores" class="dash-section" aria-labelledby="title-tutores" hidden>
+      <div class="dash-section-header">
+        <h1 id="title-tutores" class="dash-title">
+          <i data-lucide="user-check" aria-hidden="true"></i>
+          Mis tutores asignados
+        </h1>
+      </div>
+      <div id="tutores-content" aria-live="polite">
+        <div class="loading-state" role="status">
+          <i data-lucide="loader-2" class="spin" aria-hidden="true"></i>
+          Cargando...
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Historial ── -->
+    <section id="sec-historial" class="dash-section" aria-labelledby="title-historial" hidden>
+      <div class="dash-section-header">
+        <h1 id="title-historial" class="dash-title">
+          <i data-lucide="history" aria-hidden="true"></i>
+          Historial de accesos
+        </h1>
+      </div>
+      <div id="historial-content" aria-live="polite">
+        <div class="loading-state" role="status">
+          <i data-lucide="loader-2" class="spin" aria-hidden="true"></i>
+          Cargando...
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="dashboard-invidente.js"></script>
+</body>
+</html>

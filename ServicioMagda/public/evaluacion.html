@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encuesta de Evaluación de Viaje — MAGDA AI</title>
+  <meta name="description" content="Formulario de evaluación de viaje para tutores de MAGDA AI. Cinco preguntas sobre la experiencia del usuario invidente." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+</head>
+<body>
+
+<div id="toasts" aria-live="assertive" aria-atomic="true"></div>
+<div id="sr-live" aria-live="polite" class="sr-only"></div>
+
+<!-- HEADER -->
+<header class="dash-header" role="banner">
+  <div class="dash-header-inner">
+    <a href="dashboard-tutor.html" class="nav-brand" aria-label="Regresar al panel del tutor">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-name">MAGDA <span class="brand-sub">AI</span></span>
+    </a>
+    <div class="dash-role-badge">
+      <i data-lucide="clipboard-list" aria-hidden="true"></i>
+      Encuesta de Evaluacion
+    </div>
+  </div>
+</header>
+
+<main id="main-content" class="eval-main">
+  <div class="eval-container">
+
+    <!-- Barra de progreso -->
+    <div class="eval-progress" role="progressbar" aria-valuemin="0" aria-valuemax="5"
+         aria-valuenow="1" aria-label="Progreso de la encuesta" id="progress-bar-wrap">
+      <div class="eval-progress-steps" role="list" aria-label="Pasos de la encuesta">
+        <div class="eval-step active" role="listitem" aria-label="Paso 1 de 5: Autonomia" data-step="1">1</div>
+        <div class="eval-step" role="listitem" aria-label="Paso 2 de 5: Factores ambientales" data-step="2">2</div>
+        <div class="eval-step" role="listitem" aria-label="Paso 3 de 5: Confianza" data-step="3">3</div>
+        <div class="eval-step" role="listitem" aria-label="Paso 4 de 5: Claridad y latencia" data-step="4">4</div>
+        <div class="eval-step" role="listitem" aria-label="Paso 5 de 5: Viabilidad futura" data-step="5">5</div>
+      </div>
+      <div class="eval-progress-bar">
+        <div class="eval-progress-fill" id="progress-fill" style="width:20%"></div>
+      </div>
+    </div>
+
+    <!-- Contexto -->
+    <div class="eval-context" id="eval-context">
+      <div class="eval-context-icon" aria-hidden="true"><i data-lucide="accessibility"></i></div>
+      <div>
+        <strong id="eval-invidente-nombre">Cargando...</strong>
+        <span>Usuario evaluado</span>
+      </div>
+    </div>
+
+    <!-- Wizard de preguntas -->
+    <form id="eval-form" novalidate>
+
+      <!-- Pregunta 1 -->
+      <fieldset class="eval-step-panel active" id="step-1" aria-labelledby="q1-legend">
+        <legend id="q1-legend" class="eval-q-num">
+          <i data-lucide="help-circle" aria-hidden="true"></i>
+          Pregunta 1 de 5 — Autonomia y asistencia
+        </legend>
+        <p class="eval-q-text" id="q1-text">
+          En que momentos especificos de la interaccion con el asistente de voz "Magda" noto que el usuario requirio apoyo o guia externa de su parte para lograr consultar las tarifas o agendar el viaje?
+        </p>
+        <div class="form-group">
+          <label for="p1" class="form-label sr-only">Respuesta a la pregunta 1: Autonomia y asistencia</label>
+          <textarea id="p1" name="p1_autonomia" class="form-textarea" rows="5"
+                    placeholder="Describe los momentos donde fue necesaria tu intervencion..."
+                    aria-describedby="q1-text" required
+                    aria-required="true"></textarea>
+        </div>
+        <div class="eval-q-err" role="alert" aria-live="polite" id="err-1"></div>
+      </fieldset>
+
+      <!-- Pregunta 2 -->
+      <fieldset class="eval-step-panel" id="step-2" aria-labelledby="q2-legend" hidden>
+        <legend id="q2-legend" class="eval-q-num">
+          <i data-lucide="help-circle" aria-hidden="true"></i>
+          Pregunta 2 de 5 — Factores ambientales y friccion
+        </legend>
+        <p class="eval-q-text" id="q2-text">
+          De que manera el ruido de fondo ambiental o el entorno influyeron en el reconocimiento de la voz por parte de la IA y en la fluidez del proceso durante la llamada?
+        </p>
+        <div class="form-group">
+          <label for="p2" class="form-label sr-only">Respuesta a la pregunta 2: Factores ambientales</label>
+          <textarea id="p2" name="p2_factores_ambientales" class="form-textarea" rows="5"
+                    placeholder="Describe el entorno y como afecto la interaccion con MAGDA..."
+                    aria-describedby="q2-text" required aria-required="true"></textarea>
+        </div>
+        <div class="eval-q-err" role="alert" aria-live="polite" id="err-2"></div>
+      </fieldset>
+
+      <!-- Pregunta 3 -->
+      <fieldset class="eval-step-panel" id="step-3" aria-labelledby="q3-legend" hidden>
+        <legend id="q3-legend" class="eval-q-num">
+          <i data-lucide="help-circle" aria-hidden="true"></i>
+          Pregunta 3 de 5 — Confianza y seguridad
+        </legend>
+        <p class="eval-q-text" id="q3-text">
+          Desde su perspectiva como tutor, que tan seguro y confiable percibio el desarrollo del viaje y la asistencia brindada para la orientacion del usuario en la ciudad de Durango?
+        </p>
+        <div class="form-group">
+          <label for="p3" class="form-label sr-only">Respuesta a la pregunta 3: Confianza y seguridad</label>
+          <textarea id="p3" name="p3_confianza" class="form-textarea" rows="5"
+                    placeholder="Describe tu percepcion de seguridad durante el viaje..."
+                    aria-describedby="q3-text" required aria-required="true"></textarea>
+        </div>
+        <div class="eval-q-err" role="alert" aria-live="polite" id="err-3"></div>
+      </fieldset>
+
+      <!-- Pregunta 4 -->
+      <fieldset class="eval-step-panel" id="step-4" aria-labelledby="q4-legend" hidden>
+        <legend id="q4-legend" class="eval-q-num">
+          <i data-lucide="help-circle" aria-hidden="true"></i>
+          Pregunta 4 de 5 — Claridad y tiempos del sistema
+        </legend>
+        <p class="eval-q-text" id="q4-text">
+          Como evaluo la claridad de las instrucciones dictadas por el asistente y los tiempos de espera (latencia) entre las preguntas del usuario y las respuestas de la IA?
+        </p>
+        <div class="form-group">
+          <label for="p4" class="form-label sr-only">Respuesta a la pregunta 4: Claridad y latencia</label>
+          <textarea id="p4" name="p4_claridad_latencia" class="form-textarea" rows="5"
+                    placeholder="Describe si las respuestas fueron claras y si los tiempos de respuesta fueron adecuados..."
+                    aria-describedby="q4-text" required aria-required="true"></textarea>
+        </div>
+        <div class="eval-q-err" role="alert" aria-live="polite" id="err-4"></div>
+      </fieldset>
+
+      <!-- Pregunta 5 -->
+      <fieldset class="eval-step-panel" id="step-5" aria-labelledby="q5-legend" hidden>
+        <legend id="q5-legend" class="eval-q-num">
+          <i data-lucide="help-circle" aria-hidden="true"></i>
+          Pregunta 5 de 5 — Viabilidad para la independencia futura
+        </legend>
+        <p class="eval-q-text" id="q5-text">
+          Que aspectos o mejoras considera esenciales para que la persona con discapacidad visual pueda realizar viajes diarios utilizando la plataforma de forma 100% independiente en el futuro?
+        </p>
+        <div class="form-group">
+          <label for="p5" class="form-label sr-only">Respuesta a la pregunta 5: Viabilidad futura</label>
+          <textarea id="p5" name="p5_viabilidad_futura" class="form-textarea" rows="5"
+                    placeholder="Sugiere mejoras o aspectos a fortalecer para lograr la plena independencia..."
+                    aria-describedby="q5-text" required aria-required="true"></textarea>
+        </div>
+        <div class="eval-q-err" role="alert" aria-live="polite" id="err-5"></div>
+      </fieldset>
+
+      <!-- Navegación del wizard -->
+      <div class="eval-nav" role="navigation" aria-label="Controles de navegacion de la encuesta">
+        <button type="button" class="btn-ghost" id="btn-prev" disabled aria-label="Ir a la pregunta anterior">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          Anterior
+        </button>
+        <span class="eval-nav-label" id="nav-label" aria-live="polite">Pregunta 1 de 5</span>
+        <button type="button" class="btn-primary" id="btn-next" aria-label="Ir a la siguiente pregunta">
+          Siguiente
+          <i data-lucide="arrow-right" aria-hidden="true"></i>
+        </button>
+        <button type="submit" class="btn-primary" id="btn-submit" hidden aria-label="Enviar evaluacion completa">
+          <i data-lucide="send" aria-hidden="true"></i>
+          Enviar evaluacion
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Estado de envio exitoso -->
+    <div id="eval-success" class="eval-success" hidden role="status" aria-live="polite">
+      <div class="eval-success-icon" aria-hidden="true">
+        <i data-lucide="check-circle-2"></i>
+      </div>
+      <h2 class="eval-success-title">Evaluacion registrada</h2>
+      <p class="eval-success-desc">La evaluacion del viaje ha sido guardada correctamente. Gracias por contribuir a mejorar la experiencia de MAGDA.</p>
+      <a href="dashboard-tutor.html" class="btn-primary">
+        <i data-lucide="arrow-left" aria-hidden="true"></i>
+        Regresar al panel
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script src="evaluacion.js"></script>
+</body>
+</html>

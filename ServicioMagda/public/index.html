@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAGDA AI — Asistente de Movilidad Inclusiva | TINGO Durango</title>
+  <meta name="description" content="MAGDA es el asistente de voz con inteligencia artificial de TINGO que ayuda a personas con discapacidad visual a movilizarse de forma autónoma en la ciudad de Durango." />
+  <meta name="theme-color" content="#0A0F1E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Skip Navigation -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+</head>
+
+<body>
+  <!-- Live Region para lectores de pantalla -->
+  <div id="sr-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+  <!-- Toast container -->
+  <div id="toasts" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- ══════════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <nav class="nav-container" aria-label="Navegación principal">
+      <a href="/" class="nav-brand" aria-label="MAGDA AI — Inicio">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">MAGDA <span class="brand-sub">AI</span></span>
+      </a>
+
+      <button class="nav-burger" id="nav-burger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-links">
+        <i data-lucide="menu" aria-hidden="true"></i>
+      </button>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#hero"       class="nav-link">Inicio</a></li>
+        <li><a href="#media"      class="nav-link">Demostraciones</a></li>
+        <li><a href="#casos-uso"  class="nav-link">Casos de Uso</a></li>
+        <li><a href="#acceso"     class="nav-link">Acceder</a></li>
+      </ul>
+
+      <button class="btn-primary btn-sm" id="auth-btn" aria-label="Acceder o registrarse en MAGDA">
+        <i data-lucide="user" aria-hidden="true"></i>
+        <span id="auth-btn-text">Acceder</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- ── HERO ─────────────────────────────────────── -->
+    <section id="hero" class="hero-section" aria-labelledby="hero-title">
+      <canvas id="bg-canvas" aria-hidden="true"></canvas>
+      <div class="hero-content">
+        <div class="hero-badge" role="note">
+          <i data-lucide="mic" aria-hidden="true"></i>
+          Asistente de Voz con IA — TINGO Durango
+        </div>
+        <h1 id="hero-title" class="hero-title">
+          Movilidad autónoma para
+          <span class="hero-highlight">todas las personas</span>
+        </h1>
+        <p class="hero-desc">
+          MAGDA es el asistente de inteligencia artificial de TINGO diseñado especialmente
+          para que personas con discapacidad visual puedan solicitar viajes, consultar tarifas
+          y desplazarse de forma completamente autónoma en la ciudad de Durango, por medio de
+          comandos de voz naturales en español.
+        </p>
+        <div class="hero-actions">
+          <a href="#acceso" class="btn-primary">
+            <i data-lucide="log-in" aria-hidden="true"></i>
+            Acceder al portal
+          </a>
+          <a href="#media" class="btn-ghost">
+            <i data-lucide="play-circle" aria-hidden="true"></i>
+            Ver demostraciones
+          </a>
+        </div>
+
+        <div class="hero-stats" role="list" aria-label="Estadísticas del sistema">
+          <div class="stat-item" role="listitem">
+            <span class="stat-num" id="stat-users" aria-label="Usuarios registrados">—</span>
+            <span class="stat-label">Usuarios</span>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-num">24/7</span>
+            <span class="stat-label">Disponibilidad</span>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Accesible</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-orb"></div>
+        <div class="hero-ring ring-1"></div>
+        <div class="hero-ring ring-2"></div>
+        <div class="hero-ring ring-3"></div>
+        <div class="hero-icon-center">
+          <i data-lucide="mic-2"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MEDIA CENTER ──────────────────────────────── -->
+    <section id="media" class="section media-section" aria-labelledby="media-title">
+      <div class="section-inner">
+        <header class="section-header">
+          <div class="section-badge">
+            <i data-lucide="video" aria-hidden="true"></i>
+            Centro de Demostraciones
+          </div>
+          <h2 id="media-title" class="section-title">
+            Mira a MAGDA en acción
+          </h2>
+          <p class="section-desc">
+            Conoce cómo funciona el asistente de voz en situaciones reales de uso, desde la consulta de tarifas hasta la confirmación del viaje.
+          </p>
+        </header>
+
+        <div class="media-grid" role="list" aria-label="Videos de demostración">
+
+          <article class="media-card" role="listitem">
+            <div class="media-player-wrap">
+              <video
+                controls
+                preload="metadata"
+                aria-label="Demostración: Usuario invidente interactuando con MAGDA"
+                class="media-video"
+                poster="">
+                <source src="media/CIEGO 2.mp4" type="video/mp4" />
+                Tu navegador no admite video HTML5.
+                <a href="media/CIEGO 2.mp4" download>Descargar video</a>
+              </video>
+            </div>
+            <div class="media-info">
+              <h3 class="media-title">Interacción en condiciones reales</h3>
+              <p class="media-desc">Usuario con discapacidad visual interactuando con el asistente en un entorno urbano de Durango.</p>
+            </div>
+          </article>
+
+          <article class="media-card" role="listitem">
+            <div class="media-player-wrap">
+              <video
+                controls
+                preload="metadata"
+                aria-label="Demostración: Tecnología de inteligencia artificial MAGDA"
+                class="media-video">
+                <source src="media/IA.mp4" type="video/mp4" />
+                Tu navegador no admite video HTML5.
+                <a href="media/IA.mp4" download>Descargar video</a>
+              </video>
+            </div>
+            <div class="media-info">
+              <h3 class="media-title">Tecnología de inteligencia artificial</h3>
+              <p class="media-desc">Cómo MAGDA procesa y entiende el lenguaje natural en español para responder con precisión.</p>
+            </div>
+          </article>
+
+          <article class="media-card" role="listitem">
+            <div class="media-player-wrap">
+              <video
+                controls
+                preload="metadata"
+                aria-label="Demostración: MAGDA en el entorno laboral y de desplazamiento"
+                class="media-video">
+                <source src="media/TRABAJO.mp4" type="video/mp4" />
+                Tu navegador no admite video HTML5.
+                <a href="media/TRABAJO.mp4" download>Descargar video</a>
+              </video>
+            </div>
+            <div class="media-info">
+              <h3 class="media-title">Apoyo en el desplazamiento cotidiano</h3>
+              <p class="media-desc">MAGDA asistiendo en la planificación de traslados al trabajo y actividades diarias de forma independiente.</p>
+            </div>
+          </article>
+
+          <article class="media-card media-card--featured" role="listitem">
+            <div class="media-player-wrap">
+              <video
+                controls
+                preload="metadata"
+                aria-label="Comercial del ecosistema TINGO: presentación de la plataforma completa"
+                class="media-video">
+                <source src="media/Tingo_Ecosystem_commercial.mp4" type="video/mp4" />
+                Tu navegador no admite video HTML5.
+                <a href="media/Tingo_Ecosystem_commercial.mp4" download>Descargar video</a>
+              </video>
+            </div>
+            <div class="media-info">
+              <h3 class="media-title">El ecosistema TINGO</h3>
+              <p class="media-desc">Presentación del ecosistema completo de movilidad de TINGO y el papel de MAGDA como asistente central de la plataforma.</p>
+              <span class="media-badge">Presentación oficial</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CASOS DE USO ──────────────────────────────── -->
+    <section id="casos-uso" class="section casos-section" aria-labelledby="casos-title">
+      <div class="section-inner">
+        <header class="section-header">
+          <div class="section-badge">
+            <i data-lucide="heart-handshake" aria-hidden="true"></i>
+            Impacto Social
+          </div>
+          <h2 id="casos-title" class="section-title">
+            Autonomía real para personas con discapacidad visual
+          </h2>
+          <p class="section-desc">
+            MAGDA fue diseñada desde cero pensando en las necesidades específicas de personas invidentes en la ciudad de Durango. Estos son sus casos de uso principales.
+          </p>
+        </header>
+
+        <div class="casos-grid" role="list" aria-label="Casos de uso de MAGDA">
+
+          <article class="caso-card" role="listitem">
+            <div class="caso-icon" aria-hidden="true">
+              <i data-lucide="phone-call"></i>
+            </div>
+            <h3 class="caso-title">Solicitud de viaje por voz</h3>
+            <p class="caso-desc">El usuario llama al servicio TINGO y MAGDA lo guía por todo el proceso: consulta de tarifa, confirmación del origen y destino, y solicitud del conductor, sin necesidad de tocar ninguna pantalla.</p>
+          </article>
+
+          <article class="caso-card" role="listitem">
+            <div class="caso-icon" aria-hidden="true">
+              <i data-lucide="navigation"></i>
+            </div>
+            <h3 class="caso-title">Orientación en tiempo real</h3>
+            <p class="caso-desc">Durante el trayecto, MAGDA proporciona información en voz alta sobre el progreso del viaje, el tiempo estimado de llegada y cualquier novedad, manteniendo al usuario informado en todo momento.</p>
+          </article>
+
+          <article class="caso-card" role="listitem">
+            <div class="caso-icon" aria-hidden="true">
+              <i data-lucide="users"></i>
+            </div>
+            <h3 class="caso-title">Supervisión por tutores</h3>
+            <p class="caso-desc">Familiares o cuidadores pueden registrarse como Tutores y monitorear los viajes de sus personas a cargo, recibir notificaciones y evaluar la experiencia para ayudar a mejorar el servicio continuamente.</p>
+          </article>
+
+          <article class="caso-card" role="listitem">
+            <div class="caso-icon" aria-hidden="true">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <h3 class="caso-title">Seguridad y confianza verificada</h3>
+            <p class="caso-desc">MAGDA verifica la identidad del conductor, comparte datos del viaje con el tutor registrado y mantiene un historial detallado de cada trayecto para garantizar la seguridad del usuario.</p>
+          </article>
+
+          <article class="caso-card" role="listitem">
+            <div class="caso-icon" aria-hidden="true">
+              <i data-lucide="mic"></i>
+            </div>
+            <h3 class="caso-title">Lenguaje natural en español</h3>
+            <p class="caso-desc">Diseñada específicamente para el español mexicano, MAGDA comprende variaciones regionales, acentos y expresiones coloquiales de Durango, eliminando barreras de comunicación.</p>
+          </article>
+
+          <article class="caso-card" role="listitem">
+            <div class="caso-icon" aria-hidden="true">
+              <i data-lucide="trending-up"></i>
+            </div>
+            <h3 class="caso-title">Hacia la independencia total</h3>
+            <p class="caso-desc">El objetivo final de MAGDA es que cada persona con discapacidad visual pueda realizar sus desplazamientos diarios de forma completamente autónoma, sin necesitar asistencia de terceros.</p>
+          </article>
+
+        </div>
+
+        <!-- Estadísticas de impacto -->
+        <div class="impact-bar" role="complementary" aria-label="Datos de impacto del sistema">
+          <div class="impact-item">
+            <i data-lucide="globe" aria-hidden="true"></i>
+            <strong>Durango, México</strong>
+            <span>Ciudad piloto</span>
+          </div>
+          <div class="impact-sep" aria-hidden="true"></div>
+          <div class="impact-item">
+            <i data-lucide="accessibility" aria-hidden="true"></i>
+            <strong>WCAG 2.1</strong>
+            <span>Nivel AA</span>
+          </div>
+          <div class="impact-sep" aria-hidden="true"></div>
+          <div class="impact-item">
+            <i data-lucide="cpu" aria-hidden="true"></i>
+            <strong>IA en tiempo real</strong>
+            <span>Respuesta inmediata</span>
+          </div>
+          <div class="impact-sep" aria-hidden="true"></div>
+          <div class="impact-item">
+            <i data-lucide="lock" aria-hidden="true"></i>
+            <strong>Datos protegidos</strong>
+            <span>Cifrado bancario</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ACCESO AL PORTAL ──────────────────────────── -->
+    <section id="acceso" class="section acceso-section" aria-labelledby="acceso-title">
+      <div class="section-inner">
+        <header class="section-header">
+          <div class="section-badge">
+            <i data-lucide="log-in" aria-hidden="true"></i>
+            Portal de Acceso
+          </div>
+          <h2 id="acceso-title" class="section-title">Únete a la plataforma</h2>
+          <p class="section-desc">
+            Accede como Tutor para gestionar y supervisar a tus personas a cargo,
+            o como usuario Invidente para consultar tu información de viajes y tutores asignados.
+          </p>
+        </header>
+
+        <div class="acceso-cards" role="list" aria-label="Opciones de acceso por tipo de usuario">
+
+          <article class="acceso-card" role="listitem">
+            <div class="acceso-card-icon" aria-hidden="true">
+              <i data-lucide="user-check"></i>
+            </div>
+            <h3 class="acceso-card-title">Tutor / Familiar</h3>
+            <p class="acceso-card-desc">
+              Registra a las personas con discapacidad visual bajo tu supervisión,
+              monitorea sus viajes y completa encuestas de evaluación para mejorar el servicio.
+            </p>
+            <ul class="acceso-features" aria-label="Funciones del tutor">
+              <li><i data-lucide="check" aria-hidden="true"></i> Gestionar múltiples invidentes</li>
+              <li><i data-lucide="check" aria-hidden="true"></i> Historial de viajes</li>
+              <li><i data-lucide="check" aria-hidden="true"></i> Encuestas de evaluación</li>
+              <li><i data-lucide="check" aria-hidden="true"></i> Panel de supervisión</li>
+            </ul>
+            <button class="btn-primary btn-full" onclick="abrirModal('tutor')" id="btn-acceder-tutor">
+              <i data-lucide="log-in" aria-hidden="true"></i>
+              Acceder como Tutor
+            </button>
+          </article>
+
+          <article class="acceso-card acceso-card--invidente" role="listitem">
+            <div class="acceso-card-icon" aria-hidden="true">
+              <i data-lucide="accessibility"></i>
+            </div>
+            <h3 class="acceso-card-title">Usuario Invidente</h3>
+            <p class="acceso-card-desc">
+              Acceso optimizado para lectores de pantalla. Consulta tu historial de viajes,
+              visualiza tus tutores asignados y gestiona tu cuenta de forma autónoma.
+            </p>
+            <ul class="acceso-features" aria-label="Funciones del usuario invidente">
+              <li><i data-lucide="check" aria-hidden="true"></i> Compatible con NVDA y JAWS</li>
+              <li><i data-lucide="check" aria-hidden="true"></i> Navegación 100% por teclado</li>
+              <li><i data-lucide="check" aria-hidden="true"></i> Historial de viajes</li>
+              <li><i data-lucide="check" aria-hidden="true"></i> Ver tutores asignados</li>
+            </ul>
+            <button class="btn-outline btn-full" onclick="abrirModal('invidente')" id="btn-acceder-invidente">
+              <i data-lucide="log-in" aria-hidden="true"></i>
+              Acceder como Invidente
+            </button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">MAGDA <span class="brand-sub">AI</span></span>
+      </div>
+      <p class="footer-copy">
+        &copy; 2024 TINGO Durango — MAGDA AI. Portal informativo y de gestión de tutores.
+      </p>
+      <div class="footer-status" id="ft-badge" role="status" aria-live="polite">
+        <i data-lucide="circle" aria-hidden="true" id="status-icon"></i>
+        <span id="status-text">Verificando sistema...</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════
+       MODAL DE AUTENTICACIÓN
+  ══════════════════════════════════════════════════ -->
+  <div id="auth-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-box">
+      <button class="modal-close" id="auth-close" aria-label="Cerrar modal de autenticación">
+        <i data-lucide="x" aria-hidden="true"></i>
+      </button>
+
+      <div class="modal-header">
+        <span class="brand-dot sm" aria-hidden="true"></span>
+        <h2 id="modal-title">Portal MAGDA</h2>
+      </div>
+
+      <!-- Tabs -->
+      <div class="modal-tabs" role="tablist" aria-label="Opciones de acceso">
+        <button id="tab-in" role="tab" aria-selected="true" aria-controls="panel-in" class="modal-tab active">
+          <i data-lucide="log-in" aria-hidden="true"></i> Iniciar Sesión
+        </button>
+        <button id="tab-up" role="tab" aria-selected="false" aria-controls="panel-up" class="modal-tab">
+          <i data-lucide="user-plus" aria-hidden="true"></i> Registrarse
+        </button>
+      </div>
+
+      <!-- Panel: Login -->
+      <div id="panel-in" role="tabpanel" aria-labelledby="tab-in">
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label for="li-e" class="form-label">
+              <i data-lucide="mail" aria-hidden="true"></i>
+              Correo electrónico
+            </label>
+            <input type="email" id="li-e" name="correo" class="form-input"
+                   placeholder="tu@correo.com" autocomplete="email" required
+                   aria-describedby="li-e-desc" />
+            <span id="li-e-desc" class="sr-only">Ingresa tu dirección de correo electrónico</span>
+          </div>
+          <div class="form-group">
+            <label for="li-p" class="form-label">
+              <i data-lucide="lock" aria-hidden="true"></i>
+              Contraseña
+            </label>
+            <input type="password" id="li-p" name="contrasena" class="form-input"
+                   placeholder="••••••••" autocomplete="current-password" required
+                   aria-describedby="li-p-desc" />
+            <span id="li-p-desc" class="sr-only">Ingresa tu contraseña</span>
+          </div>
+          <div id="li-err" class="form-error" role="alert" aria-live="polite"></div>
+          <button type="submit" id="li-btn" class="btn-primary btn-full">
+            <i data-lucide="log-in" aria-hidden="true"></i>
+            <span class="bst">Iniciar Sesión</span>
+            <span class="bsp" hidden aria-label="Cargando">
+              <i data-lucide="loader-2" class="spin" aria-hidden="true"></i>
+            </span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Panel: Registro -->
+      <div id="panel-up" role="tabpanel" aria-labelledby="tab-up" hidden>
+        <form id="reg-form" novalidate>
+          <div class="form-group">
+            <label for="ru-n" class="form-label">
+              <i data-lucide="user" aria-hidden="true"></i>
+              Nombre completo
+            </label>
+            <input type="text" id="ru-n" name="nombre_completo" class="form-input"
+                   placeholder="Tu nombre" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label for="ru-e" class="form-label">
+              <i data-lucide="mail" aria-hidden="true"></i>
+              Correo electrónico
+            </label>
+            <input type="email" id="ru-e" name="correo" class="form-input"
+                   placeholder="tu@correo.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="ru-p" class="form-label">
+              <i data-lucide="lock" aria-hidden="true"></i>
+              Contraseña (mínimo 6 caracteres)
+            </label>
+            <input type="password" id="ru-p" name="contrasena" class="form-input"
+                   placeholder="••••••••" autocomplete="new-password" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label for="ru-rol" class="form-label">
+              <i data-lucide="shield" aria-hidden="true"></i>
+              Tipo de cuenta
+            </label>
+            <select id="ru-rol" name="tipo_rol" class="form-input" required
+                    aria-describedby="ru-rol-desc">
+              <option value="">Selecciona tu tipo de cuenta</option>
+              <option value="tutor">Tutor — supervisar personas invidentes</option>
+              <option value="invidente">Usuario invidente — acceso asistido</option>
+              <option value="usuario">Usuario general</option>
+            </select>
+            <span id="ru-rol-desc" class="form-hint">El tipo de cuenta define qué funciones tendrás disponibles en el portal.</span>
+          </div>
+          <div id="ru-err" class="form-error" role="alert" aria-live="polite"></div>
+          <button type="submit" id="ru-btn" class="btn-primary btn-full">
+            <i data-lucide="user-plus" aria-hidden="true"></i>
+            <span class="bst">Crear Cuenta</span>
+            <span class="bsp" hidden aria-label="Cargando">
+              <i data-lucide="loader-2" class="spin" aria-hidden="true"></i>
+            </span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
